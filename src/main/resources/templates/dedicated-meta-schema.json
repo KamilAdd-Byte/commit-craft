@@ -1,26 +1,3 @@
 {
-  "dedicated" : [ {
-    "name" : "apilia-project",
-    "description" : "Dedykowany dla projektu coś tam",
-    "pattern" : "{ticket_id}-{type}-{scope}-{message}-{details}",
-    "model" : {
-      "ticket_id" : "Numer powiązanego zadania w JIRA",
-      "type" : [ "feat", "fix", "junk", "chore", "test" ],
-      "scope" : "[moduł lub komponent]",
-      "message" : "Krótki opis zmiany",
-      "details" : "Szczegóły zmian w treści commit message"
-    }
-  }, {
-    "name" : "apilia-project",
-    "description" : "Dedykowany dla projektu coś tam",
-    "pattern" : "{ticket_id}-{type}-{scope}-{message}-{details}-{none}",
-    "model" : {
-      "ticket_id" : "Numer powiązanego zadania w JIRA",
-      "type" : [ "feat", "fix", "junk", "chore", "test" ],
-      "scope" : "[moduł lub komponent]",
-      "message" : "Krótki opis zmiany",
-      "details" : "Szczegóły zmian w treści commit message",
-      "none" : "cos"
-    }
-  } ]
+  "dedicated" : [ ]
 }
