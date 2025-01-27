@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.Set;
 
 @Slf4j
-public class CommitDedicatedTemplateValidator {
+class CommitDedicatedTemplateValidator {
     private static final String PATTERN_VALIDATE_MODEL = "\\{(\\w+)\\}(-\\{(\\w+)\\})*";
 
-    public static boolean validatePatternAndModelScope(CommitCraftTemplate template) {
+    static boolean validatePatternAndModelScope(CommitCraftTemplate template) {
         log.info("Validating pattern and model scope starting");
         String pattern = template.getPattern();
         Map<String, Object> model = template.getModel();

@@ -46,11 +46,12 @@ public final class CommitModelPattern extends BasicModelPattern {
     }
 
     /**
-     * Główna metoda wybierająca odpowiedni wzorzec na podstawie flagi `wholeGitCommand`, `component` i `details`.
-     * @param wholeGitCommand - jeśli true, zwraca wzorzec z pełnym git commit.
-     * @param component - nazwa komponentu, może być pusta.
-     * @param details - szczegóły, mogą być puste.
-     * @return odpowiedni wzorzec.
+     * Main method for selecting the appropriate pattern based on the `wholeGitCommand`, `component`, and `details` flags.
+     *
+     * @param wholeGitCommand - if true, returns a pattern with the full Git commit command.
+     * @param component - the name of the component, may be empty.
+     * @param details - additional details, may be empty.
+     * @return the appropriate pattern.
      */
     public static String getPattern(boolean wholeGitCommand, String component, String details) {
         if (wholeGitCommand) {
@@ -61,10 +62,12 @@ public final class CommitModelPattern extends BasicModelPattern {
     }
 
     /**
-     * Zwraca odpowiedni wzorzec z pełnym poleceniem Git, w zależności od tego, czy `component` i `details` są puste.
-     * @param component - nazwa komponentu.
-     * @param details - szczegóły.
-     * @return wzorzec z pełnym poleceniem Git.
+     * Returns the appropriate pattern with the full Git command,
+     * depending on whether `component` and `details` are empty or not.
+     *
+     * @param component - the name of the component.
+     * @param details - additional details.
+     * @return a pattern with the full Git commit command.
      */
     private static String getPatternWithGitCommand(String component, String details) {
         if (component.isEmpty() && details.isEmpty()) {
@@ -79,10 +82,12 @@ public final class CommitModelPattern extends BasicModelPattern {
     }
 
     /**
-     * Zwraca odpowiedni wzorzec bez pełnego polecenia Git, w zależności od tego, czy `component` i `details` są puste.
-     * @param component - nazwa komponentu.
-     * @param details - szczegóły.
-     * @return wzorzec bez pełnego polecenia Git.
+     * Returns the appropriate pattern without the full Git command,
+     * depending on whether `component` and `details` are empty or not.
+     *
+     * @param component - the name of the component.
+     * @param details - additional details.
+     * @return a pattern without the full Git commit command.
      */
     private static String getPatternWithoutGitCommand(String component, String details) {
         if (component.isEmpty() && details.isEmpty()) {

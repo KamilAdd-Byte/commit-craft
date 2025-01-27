@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/quick-commit")
+@RequestMapping("/api/v1/commit-quick")
 @RequiredArgsConstructor
-public class QuickCommitController {
+public class CommitQuickController {
 
-    final QuickCommitService quickCommitService;
+    final CommitQuickService commitQuickService;
 
     @PostMapping("/craft")
-    public String generateCommit(@RequestBody QuickCommitRequest quickCommitRequest) {
-        return quickCommitService.generateQuickCommit(
-                quickCommitRequest.topicScope(),
-                quickCommitRequest.isGitCommand()
+    public String generateCommit(@RequestBody CommitQuickRequest commitQuickRequest) {
+        return commitQuickService.generateQuickCommit(
+                commitQuickRequest.topicScope(),
+                commitQuickRequest.isGitCommand()
         );
     }
 }

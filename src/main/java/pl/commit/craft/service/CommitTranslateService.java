@@ -8,17 +8,17 @@ import pl.commit.craft.translate.TranslateCommitCraft;
 
 @Service
 @RequiredArgsConstructor
-public class CommitService {
+public class CommitTranslateService {
     private final TranslateCommitCraft translateCommitCraft;
 
-    public String generateTranslateCommit(String major, String type, String component, String changeDescription, String details, boolean wholeGitCommand) {
+    public String generateTranslateCommit(String major, String type, String component, String changeDescription, String details, boolean wholeGitCommand, String language) {
         if (isValidType(type)) {
             throw new IllegalArgumentException("Invalid commit type: " + type);
         }
 
         MajorNumber majorNumber = MajorNumberPreparer.of(major).getMajorNumber();
-        String changeDescriptionTranslated = getChangeDescriptionTranslated(changeDescription);
-        String detailsTranslated = !details.isEmpty() ? getChangeDescriptionTranslated(details) : "";
+        String changeDescriptionTranslated = getChangeDescriptionTranslated(changeDescription, language);
+        String detailsTranslated = !details.isEmpty() ? getChangeDescriptionTranslated(details, language) : "";
         String pattern = CommitModelPattern.getPattern(wholeGitCommand, component, detailsTranslated);
 
         return String.format(
@@ -33,7 +33,7 @@ public class CommitService {
 
     public String generateFlowCommit(String major, String type, String component, String changeDescription, String details, boolean wholeGitCommand) {
         if (isValidType(type)) {
-            throw new IllegalArgumentException("Invalid commit type: " + type);
+            throw new IllegalArgumentException(String.format("Invalid commit type: %s", type));
         }
 
         MajorNumber majorNumber = MajorNumberPreparer.of(major).getMajorNumber();
@@ -50,8 +50,8 @@ public class CommitService {
         ).trim();
     }
 
-    private String getChangeDescriptionTranslated(String changeDescription) {
-        return translateCommitCraft.translate(changeDescription, CommitModelPattern.getTargetLanguage());
+    private String getChangeDescriptionTranslated(String changeDescription, String language) {
+        return translateCommitCraft.translate(changeDescription, CommitModelPattern.getTargetLanguage(language));
     }
 
     private boolean isValidType(String type) {

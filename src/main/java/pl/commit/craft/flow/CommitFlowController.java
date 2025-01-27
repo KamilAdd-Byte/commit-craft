@@ -4,21 +4,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.commit.craft.service.CommitService;
+import pl.commit.craft.service.CommitTranslateService;
 
 @RestController
 @RequestMapping("/api/v1/commit-flow")
 public class CommitFlowController {
 
-    private final CommitService commitService;
+    private final CommitTranslateService commitTranslateService;
 
-    public CommitFlowController(CommitService commitService) {
-        this.commitService = commitService;
+    public CommitFlowController(CommitTranslateService commitTranslateService) {
+        this.commitTranslateService = commitTranslateService;
     }
 
     @PostMapping("/craft")
     public String generateCommit(@RequestBody CommitFlowRequest commitFlowRequest) {
-        return commitService.generateFlowCommit(
+        return commitTranslateService.generateFlowCommit(
                 commitFlowRequest.major(),
                 commitFlowRequest.type(),
                 commitFlowRequest.component(),

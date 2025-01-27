@@ -6,5 +6,6 @@ public record CommitTranslateRequest(
         String component,
         String changeDescription,
         String details,
-        boolean wholeGitCommand
+        boolean wholeGitCommand,
+        String language
 ) {}

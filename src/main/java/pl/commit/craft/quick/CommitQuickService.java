@@ -3,7 +3,7 @@ package pl.commit.craft.quick;
 import org.springframework.stereotype.Service;
 
 @Service
-class QuickCommitService {
+class CommitQuickService {
     private static final String AUDIT_COMMIT = "audit: Audit fix";
     private static final String PR_FIX_COMMIT = "fix: Pull request comments improved";
     private static final String TEST_FIX_COMMIT = "test: Fixed tests";

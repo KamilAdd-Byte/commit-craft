@@ -1,11 +1,10 @@
 package pl.commit.craft.template;
 
 import lombok.Data;
-
 import java.util.Map;
 
 @Data
-public class ProjectTemplate {
+class ProjectTemplate {
     private String name;
     private String description;
     private String pattern;

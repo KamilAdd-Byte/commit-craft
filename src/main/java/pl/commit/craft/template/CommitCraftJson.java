@@ -1,12 +1,13 @@
 package pl.commit.craft.template;
 
 import lombok.Getter;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 @Getter
-public class CommitCraftJson {
-    private Map<String, Object> jsonContent;
+class CommitCraftJson {
+    private final Map<String, Object> jsonContent;
 
     public CommitCraftJson() {
         jsonContent = new HashMap<>();
@@ -16,7 +17,7 @@ public class CommitCraftJson {
         jsonContent.put(key, value);
     }
 
-    public Map<String, Object> getJsonContent() {
-        return jsonContent;
+    public Map<String, Object> getFields() {
+        return Collections.unmodifiableMap(jsonContent);
     }
 }

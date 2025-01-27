@@ -16,10 +16,10 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class TemplateService {
-    public static final String PROPERTY_TEMPLATES = "templates";
-    public static final String PROPERTY_DEDICATED_TEMPLATES = "dedicated";
-    public static final String PATH_NAME_ELEMENT = "name";
+class CommitTemplateService {
+    private static final String PROPERTY_TEMPLATES = "templates";
+    private static final String PROPERTY_DEDICATED_TEMPLATES = "dedicated";
+    private static final String PATH_NAME_ELEMENT = "name";
     private static final String RESOURCES_TEMPLATES_META_SCHEMA_JSON = "src/main/resources/templates/meta-schema.json";
     private static final String RESOURCES_DEDICATED_META_SCHEMA_JSON = "src/main/resources/templates/dedicated-meta-schema.json";
     private final ObjectMapper objectMapper;

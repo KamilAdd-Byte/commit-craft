@@ -11,13 +11,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-class CommitServiceTest {
+class CommitTranslateServiceTest {
 
     @Mock
     private TranslateCommitCraft translateCommitCraft;
 
     @InjectMocks
-    private CommitService commitService;
+    private CommitTranslateService commitTranslateService;
 
     @BeforeEach
     void setUp() {
@@ -38,7 +38,7 @@ class CommitServiceTest {
         when(translateCommitCraft.translate(changeDescription, "EN")).thenReturn("Add new button");
         when(translateCommitCraft.translate(details, "EN")).thenReturn("Added a new button to the main page.");
 
-        String commitMessage = commitService.generateTranslateCommit(major, type, component, changeDescription, details, wholeGitCommand);
+        String commitMessage = commitTranslateService.generateTranslateCommit(major, type, component, changeDescription, details, wholeGitCommand, "EN");
 
         // then
         assertNotNull(commitMessage);
@@ -54,7 +54,7 @@ class CommitServiceTest {
         String type = "invalidType";
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            commitService.generateTranslateCommit(null, type, "UI", "Description", "Details", false);
+            commitTranslateService.generateTranslateCommit(null, type, "UI", "Description", "Details", false, "EN");
         });
 
         // then
@@ -74,7 +74,7 @@ class CommitServiceTest {
         // when
         when(translateCommitCraft.translate(changeDescription, "EN")).thenReturn("Fix bug in payment module");
 
-        String commitMessage = commitService.generateTranslateCommit(major, type, component, changeDescription, details, wholeGitCommand);
+        String commitMessage = commitTranslateService.generateTranslateCommit(major, type, component, changeDescription, details, wholeGitCommand, "EN");
 
         // then
         assertNotNull(commitMessage);
@@ -93,7 +93,7 @@ class CommitServiceTest {
         // when
         when(translateCommitCraft.translate(changeDescription, "EN")).thenReturn("Add new feature");
 
-        String commitMessage = commitService.generateTranslateCommit(major, type, component, changeDescription, "", wholeGitCommand);
+        String commitMessage = commitTranslateService.generateTranslateCommit(major, type, component, changeDescription, "", wholeGitCommand, "EN");
 
         // then
         assertNotNull(commitMessage);
@@ -111,7 +111,7 @@ class CommitServiceTest {
         String details = "";
         boolean wholeGitCommand = true;
 
-        String commitMessage = commitService.generateFlowCommit(major, type, component, changeDescription, details, wholeGitCommand);
+        String commitMessage = commitTranslateService.generateFlowCommit(major, type, component, changeDescription, details, wholeGitCommand);
 
         // then
         assertNotNull(commitMessage);

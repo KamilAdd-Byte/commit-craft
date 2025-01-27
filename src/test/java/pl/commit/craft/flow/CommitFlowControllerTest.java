@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import pl.commit.craft.service.CommitService;
+import pl.commit.craft.service.CommitTranslateService;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class CommitFlowControllerTest {
 
     @Mock
-    private CommitService commitService;
+    private CommitTranslateService commitTranslateService;
 
     @InjectMocks
     private CommitFlowController commitFlowController;
@@ -46,7 +46,7 @@ class CommitFlowControllerTest {
                 + "}";
 
         // when
-        when(commitService.generateFlowCommit("1", "bugfix", "componentA", "Fixed issue", "Detailed description", true))
+        when(commitTranslateService.generateFlowCommit("1", "bugfix", "componentA", "Fixed issue", "Detailed description", true))
                 .thenReturn("git commit -m \"1 bugfix(componentA): Fixed issue\n\nDetailed description\"");
 
        //then
