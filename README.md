@@ -1,5 +1,7 @@
 
-# Gen Commiting Application
+# Commmit Craft API
+
+<img src="src/main/resources/images/craft.jpg" alt="Craft" width="300"/>
 
 ## Requirements
 - Java 17+
@@ -29,12 +31,12 @@
 
 3. If you want to build the Docker image, use the following command:
    ```bash
-   docker build -t gen-commiting .
+   docker build -t commmit-craft .
    ```
 
 4. Run the Docker container:
    ```bash
-   docker run -d -p 9000:9000 --name gen-commiting gen-commiting
+   docker run -d -p 8090:8090 --name commmit-craft commmit-craft
    ```
 
 5. The application will be available at `http://localhost:8090`.
@@ -56,7 +58,7 @@ The `translate` module integrates with DeepL for machine translation. To use thi
 
 ## Configuration
 
-You can specify different profiles for the application. For example, to use the `kam` profile:
+You can specify different profiles for the application. For example, to use the `dev` profile:
 
 1. In `application.yml`:
    ```properties

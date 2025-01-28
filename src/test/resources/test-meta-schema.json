@@ -1,0 +1,46 @@
+{
+  "templates": [
+    {
+      "name": "conventional",
+      "description": "Standardowy format Conventional Commits",
+      "pattern": "{type}: {scope} - {message}",
+      "model": {
+        "type": ["feat", "fix", "chore", "docs", "refactor", "test"],
+        "scope": "[optional]",
+        "message": "Zwięzły opis zmiany"
+      }
+    },
+    {
+      "name": "detailed",
+      "description": "Rozszerzone informacje dla commitów",
+      "pattern": "[{ticket_link_number}] {type}({scope}): {message}\n\n{details}",
+      "model": {
+        "ticket_id": "Numer powiązanego zadania w JIRA",
+        "type": ["feat", "fix", "junk", "chore", "test"],
+        "scope": "[moduł lub komponent]",
+        "message": "Krótki opis zmiany",
+        "details": "Szczegóły zmian w treści commit message"
+      }
+    },
+    {
+      "name": "markdown",
+      "description": "Commit message w stylu markdown",
+      "pattern": "# {type}: {message}\n\n## Opis zmian\n{details}\n\n### Powiązane zadania\n{related_tasks}",
+      "model": {
+        "type": ["feat", "fix", "docs"],
+        "message": "Krótki opis zmian",
+        "details": "Szczegółowy opis zmian w commitach",
+        "related_tasks": "Lista powiązanych zadań (np. #123, #124)"
+      }
+    },
+    {
+      "name": "quickly",
+      "description": "Szybki commit message",
+      "pattern": "# {type}: {message}\n\n## Opis zmian\n{details}\n\n### Powiązane zadania\n{related_tasks}",
+      "model": {
+        "type": ["feat", "fix", "docs"],
+        "message": "Krótki opis zmian"
+      }
+    }
+  ]
+}
