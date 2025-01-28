@@ -90,6 +90,10 @@ To run the tests for the application, use Gradle:
 ./gradlew test
 ```
 
+### Swagger documentation API
+
+http://localhost:8090/swagger-ui/index.html
+
 ## License
 
 This project is licensed under the MIT License.
