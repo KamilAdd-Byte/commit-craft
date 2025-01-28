@@ -54,7 +54,7 @@ class CommitTemplateService {
         return getCommitCraftJson(selectedTemplate, selectedTemplate.getName());
     }
 
-    private CommitCraftJson getCommitCraftJson(CommitCraftTemplate selectedTemplate, String selectedTemplateName) throws IOException {
+    CommitCraftJson getCommitCraftJson(CommitCraftTemplate selectedTemplate, String selectedTemplateName) throws IOException {
         Map<String, Object> model = selectedTemplate.getModel();
         CommitCraftJson commitCraftJson = new CommitCraftJson();
         commitCraftJson.addField(PATH_NAME_ELEMENT, selectedTemplateName);
