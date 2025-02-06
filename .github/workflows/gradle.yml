@@ -30,7 +30,7 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/upload-artifact@v4
 
       # Ensure gradlew has executable permissions
       - name: Set execute permission for gradlew
