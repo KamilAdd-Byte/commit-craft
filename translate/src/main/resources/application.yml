@@ -1,4 +1,4 @@
 deepl:
   api:
-    key: 92f2c230-abe8-4dc6-b90b-bbc3f7db0210:fx
+    key:
     url: https://api-free.deepl.com/v2/translate

@@ -14,7 +14,8 @@
    git clone <repository-URL>
    cd <repository-name>
    ```
-2. Inside /gen with git bash write command 
+2. add your deepl api-key to translate/src/main/resources/application.yml in key section  
+3. Inside /gen with git bash write command 
    ```./build.sh``` (sometimes need before used ```chmod +x build.sh```)
 
 ## Other Start
@@ -67,7 +68,7 @@ You can specify different profiles for the application. For example, to use the 
 
 2. Alternatively, you can pass the active profile as a Docker environment variable:
    ```bash
-   docker run -d -p 9000:9000 -e SPRING_PROFILES_ACTIVE=kam --name gen-commiting gen-commiting
+   docker run -d -p 8090:8090 -e SPRING_PROFILES_ACTIVE=kam --name commmit-craft commmit-craft
    ```
 
 ## Docker Configuration
