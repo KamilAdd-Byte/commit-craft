@@ -22,7 +22,6 @@ on:
       - 'release/*'
       - 'fix/*'
       - 'poc/*'
-
 jobs:
   build-and-test:
 
