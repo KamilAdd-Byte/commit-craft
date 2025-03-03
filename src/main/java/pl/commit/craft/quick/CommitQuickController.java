@@ -29,6 +29,7 @@ public class CommitQuickController {
             ) CommitQuickRequest commitQuickRequest) {
         return commitQuickService.generateQuickCommit(
                 commitQuickRequest.topicScope(),
+                commitQuickRequest.message(),
                 commitQuickRequest.isGitCommand()
         );
     }
