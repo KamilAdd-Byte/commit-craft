@@ -45,13 +45,13 @@ public class CommitTranslateService {
                 majorNumber != null ? majorNumber.issueNumber() : "",
                 type,
                 component,
-                changeDescription,
+                changeDescription.toLowerCase(),
                 detailsFlow
         ).trim();
     }
 
     private String getChangeDescriptionTranslated(String changeDescription, String language) {
-        return translateCommitCraft.translate(changeDescription, CommitModelPattern.getTargetLanguage(language));
+        return translateCommitCraft.translate(changeDescription, CommitModelPattern.getTargetLanguage(language)).toLowerCase();
     }
 
     private boolean isValidType(String type) {

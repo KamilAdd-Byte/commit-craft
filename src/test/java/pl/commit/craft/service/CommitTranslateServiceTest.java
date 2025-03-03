@@ -44,8 +44,8 @@ class CommitTranslateServiceTest {
         assertNotNull(commitMessage);
         assertTrue(commitMessage.contains("feat"));
         assertTrue(commitMessage.contains("UI"));
-        assertTrue(commitMessage.contains("Add new button"));
-        assertTrue(commitMessage.contains("Added a new button to the main page."));
+        assertTrue(commitMessage.contains("add new button"));
+        assertTrue(commitMessage.contains("added a new button to the main page."));
     }
 
     @Test
@@ -98,7 +98,7 @@ class CommitTranslateServiceTest {
         // then
         assertNotNull(commitMessage);
         assertTrue(commitMessage.contains("TEET-1234"));
-        assertThat(commitMessage).isEqualTo("TEET-1234 feat(UI): Add new feature");
+        assertThat(commitMessage).isEqualTo("TEET-1234 feat(UI): add new feature");
     }
 
     @Test
@@ -116,6 +116,6 @@ class CommitTranslateServiceTest {
         // then
         assertNotNull(commitMessage);
         assertTrue(commitMessage.contains("TEET-1234"));
-        assertThat(commitMessage).isEqualTo("git commit -m \"TEET-1234 fix(Report): Add new feature\"");
+        assertThat(commitMessage).isEqualTo("git commit -m \"TEET-1234 fix(Report): add new feature\"");
     }
 }
