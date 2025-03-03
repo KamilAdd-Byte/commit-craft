@@ -34,10 +34,10 @@ class CommitQuickControllerTest {
         String topicScope = "fix";
         boolean isGitCommand = true;
 
-        CommitQuickRequest commitQuickRequest = new CommitQuickRequest(topicScope, isGitCommand);
+        CommitQuickRequest commitQuickRequest = new CommitQuickRequest(topicScope, null, isGitCommand);
         String expectedCommitMessage = "git commit -m \"fix: fixed a bug\"";
 
-        when(commitQuickService.generateQuickCommit(topicScope, isGitCommand)).thenReturn(expectedCommitMessage);
+        when(commitQuickService.generateQuickCommit(topicScope, null, isGitCommand)).thenReturn(expectedCommitMessage);
 
         mockMvc.perform(post("/api/v1/commit-quick/craft")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -45,7 +45,7 @@ class CommitQuickControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(expectedCommitMessage));
 
-        verify(commitQuickService, times(1)).generateQuickCommit(topicScope, isGitCommand);
+        verify(commitQuickService, times(1)).generateQuickCommit(topicScope, null, isGitCommand);
     }
 
     @Test
@@ -53,9 +53,9 @@ class CommitQuickControllerTest {
         String topicScope = "invalidTopic";
         boolean isGitCommand = false;
 
-        CommitQuickRequest commitQuickRequest = new CommitQuickRequest(topicScope, isGitCommand);
+        CommitQuickRequest commitQuickRequest = new CommitQuickRequest(topicScope, null, isGitCommand);
 
-        when(commitQuickService.generateQuickCommit(topicScope, isGitCommand)).thenReturn("Invalid commit");
+        when(commitQuickService.generateQuickCommit(topicScope, null, isGitCommand)).thenReturn("Invalid commit");
 
         mockMvc.perform(post("/api/v1/commit-quick/craft")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -63,6 +63,6 @@ class CommitQuickControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("Invalid commit"));
 
-        verify(commitQuickService, times(1)).generateQuickCommit(topicScope, isGitCommand);
+        verify(commitQuickService, times(1)).generateQuickCommit(topicScope, null, isGitCommand);
     }
 }
