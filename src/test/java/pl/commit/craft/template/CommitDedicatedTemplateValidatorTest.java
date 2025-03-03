@@ -1,77 +1,72 @@
 package pl.commit.craft.template;
 
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.read.ListAppender;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CommitDedicatedTemplateValidatorTest {
-    private static final Logger log = LoggerFactory.getLogger(CommitDedicatedTemplateValidator.class);
-
-    @InjectMocks
-    private CommitDedicatedTemplateValidator validator;
-
-    private ListAppender<ILoggingEvent> listAppender;
-
-
-    @BeforeEach
-    void setUp() {
-        listAppender = new ListAppender<>();
-        listAppender.start();
-
-        ((ch.qos.logback.classic.Logger) log).addAppender(listAppender);
-    }
 
     @Test
-    void testValidatePatternAndModelScope_success() {
+    void shouldValidatePatternAndModelScope_Success() {
         Map<String, Object> model = Map.of(
-                "type", "feat",
                 "scope", "core",
                 "message", "message"
         );
 
-        CommitCraftTemplate validTemplate = new CommitCraftTemplate("feat-{scope}", "Standard commit", "feat-{scope}", model);
+        CommitCraftTemplate validTemplate = new CommitCraftTemplate("feat-{scope}-{message}", "Standard commit", "feat-{scope}-{message}", model);
 
-        boolean result = CommitDedicatedTemplateValidator.validatePatternAndModelScope(validTemplate);
+        ValidationResult result = CommitDedicatedTemplateValidator.validatePatternAndModelScopeDetailed(validTemplate);
 
-        assertFalse(result);
-        assertFalse(listAppender.list.stream().anyMatch(event -> event.getMessage().contains("Pattern matches the model keys.")));
+        assertTrue(result.isValid());
+        assertEquals("Template is valid", result.getErrorMessage());
     }
 
     @Test
-    void testValidatePatternAndModelScope_missingModelKey() {
+    void shouldValidatePatternAndModelScope_MissingModelKey() {
         Map<String, Object> model = Map.of(
                 "type", "feat",
+                "message", "message",
                 "scope", "core"
         );
 
-        CommitCraftTemplate invalidTemplate = new CommitCraftTemplate("feat-{scope}-{extraKey}", "Invalid commit", "feat-{scope}-{extraKey}", model);
+        CommitCraftTemplate invalidTemplate = new CommitCraftTemplate("feat-{scope}-{message}", "Invalid commit", "feat-{scope}-{message}", model);
 
-        boolean result = CommitDedicatedTemplateValidator.validatePatternAndModelScope(invalidTemplate);
+        ValidationResult result = CommitDedicatedTemplateValidator.validatePatternAndModelScopeDetailed(invalidTemplate);
 
-        assertFalse(result);
-        assertFalse(listAppender.list.stream().anyMatch(event -> event.getMessage().contains("Pattern contains an extra key not in the model: extraKey")));
+        assertFalse(result.isValid());
+        assertEquals("Invalid template format: Keys missing in pattern: [type]", result.getErrorMessage());
     }
 
     @Test
-    void testValidatePatternAndModelScope_extraModelKey() {
+    void shouldValidatePatternAndModelScope_ExtraModelKey() {
         Map<String, Object> model = Map.of(
                 "type", "feat",
                 "scope", "core",
-                "message", "extra"
+                "extraKey", "extra"
         );
 
         CommitCraftTemplate invalidTemplate = new CommitCraftTemplate("feat-{scope}", "Invalid commit", "feat-{scope}", model);
 
-        boolean result = CommitDedicatedTemplateValidator.validatePatternAndModelScope(invalidTemplate);
+        ValidationResult result = CommitDedicatedTemplateValidator.validatePatternAndModelScopeDetailed(invalidTemplate);
 
-        assertFalse(result);
-        assertFalse(listAppender.list.stream().anyMatch(event -> event.getMessage().contains("Pattern is missing key: message")));
+        assertFalse(result.isValid());
+        assertEquals("Invalid template format: Keys missing in pattern: [extraKey, type]", result.getErrorMessage());
+    }
+
+    @Test
+    void shouldValidatePatternAndModelScope_BothMissingAndExtraKeys() {
+        Map<String, Object> model = Map.of(
+                "type", "feat",
+                "scope", "core",
+                "extraKey", "extra"
+        );
+
+        CommitCraftTemplate invalidTemplate = new CommitCraftTemplate("feat-{scope}-{message}", "Invalid commit", "feat-{scope}-{message}", model);
+
+        ValidationResult result = CommitDedicatedTemplateValidator.validatePatternAndModelScopeDetailed(invalidTemplate);
+
+        assertFalse(result.isValid());
+        assertEquals("Invalid template format: Keys missing in pattern: [extraKey, type]; Missing keys in model: [message]", result.getErrorMessage());
     }
 }

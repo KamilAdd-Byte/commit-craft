@@ -2,7 +2,6 @@ package pl.commit.craft.template;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
 import java.util.Set;
 
 @AllArgsConstructor
