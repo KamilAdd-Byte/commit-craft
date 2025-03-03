@@ -3,9 +3,11 @@ package pl.commit.craft.template;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -30,18 +32,23 @@ public class CommitCraftTemplateController {
             summary = "Create a dedicated commit template",
             description = "Creates a new dedicated commit template if the pattern and model scope are valid.",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Template added successfully"),
-                    @ApiResponse(responseCode = "400", description = "Template already exists")
+                    @ApiResponse(responseCode = "201", description = "Template created successfully"),
+                    @ApiResponse(responseCode = "400", description = "Invalid template format or template already exists")
             }
     )
     @PostMapping("/dedicated")
-    public ResponseEntity<String> createDedicatedTemplate(@RequestBody CommitCraftTemplate template) throws IOException {
-            boolean patternAndModelScope = CommitDedicatedTemplateValidator.validatePatternAndModelScope(template);
-            if (patternAndModelScope) {
-                commitTemplateService.createDedicatedTemplate(template);
-                return ResponseEntity.ok("Template added successfully.");
-            }
-           return ResponseEntity.badRequest().body("Template already exists.");
+    public ResponseEntity<Map<String, String>> createDedicatedTemplate(@RequestBody CommitCraftTemplate template) throws IOException {
+        TemplateOperationResult result = commitTemplateService.createDedicatedTemplate(template);
+
+        if (result.success()) {
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(Collections.singletonMap("message", result.message()));
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap("error", result.message()));
     }
 
     @Operation(

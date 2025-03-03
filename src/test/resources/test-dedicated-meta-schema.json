@@ -1,1 +1,21 @@
-{"dedicated":[]}
+{
+  "dedicated": [
+    {
+      "name": "test-project",
+      "description": "Dedykowany dla projektu coś tam",
+      "pattern": "{ticket_id} {type}({scope}): {message}",
+      "model": {
+        "ticket_id": "Numer powiązanego zadania w JIRA",
+        "type": [
+          "feat",
+          "fix",
+          "junk",
+          "chore",
+          "test"
+        ],
+        "scope": "[moduł lub komponent]",
+        "message": "Krótki opis zmiany"
+      }
+    }
+  ]
+}
