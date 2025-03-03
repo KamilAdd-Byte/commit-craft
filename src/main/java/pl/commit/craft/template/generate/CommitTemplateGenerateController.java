@@ -18,4 +18,10 @@ public class CommitTemplateGenerateController {
         String commitMessage = service.generateCommit(templateName, commitData);
         return ResponseEntity.ok(commitMessage);
     }
+
+    @PostMapping("/generate-dedicated")
+    public ResponseEntity<String> generateDedicatedCommit(@RequestParam String templateName, @RequestBody JsonNode commitData) throws IOException {
+        String commitMessage = service.generateDedicatedCommit(templateName, commitData);
+        return ResponseEntity.ok(commitMessage);
+    }
 }

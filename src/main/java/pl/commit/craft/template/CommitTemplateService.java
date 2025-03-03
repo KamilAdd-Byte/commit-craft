@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 class CommitTemplateService {
@@ -78,10 +80,57 @@ class CommitTemplateService {
         });
     }
 
-    public void createDedicatedTemplate(CommitCraftTemplate newTemplate) throws IOException {
-        List<CommitCraftTemplate> templates = readTemplates();
-        templates.add(newTemplate);
-        saveTemplates(templates);
+    /**
+     * Creates a dedicated template after validating it.
+     *
+     * @param template The template to create
+     * @return Result containing success/failure status and a message
+     * @throws IOException If there's an issue accessing the template storage
+     */
+    public TemplateOperationResult createDedicatedTemplate(CommitCraftTemplate template) throws IOException {
+        ValidationResult validationResult =
+                CommitDedicatedTemplateValidator.validatePatternAndModelScopeDetailed(template);
+
+        if (!validationResult.isValid()) {
+            String errorMessage = validationResult.getErrorMessage();
+            log.warn("Template validation failed: {}", errorMessage);
+            return new TemplateOperationResult(false, errorMessage);
+        }
+
+        if (templateExists(template.getName())) {
+            log.warn("Template with name '{}' already exists", template.getName());
+            return new TemplateOperationResult(false, "Template with name '" + template.getName() + "' already exists");
+        }
+
+        saveTemplate(template);
+        log.info("Template '{}' created successfully", template.getName());
+        return new TemplateOperationResult(true, "Template created successfully");
+    }
+
+    /**
+     * Checks if a template with the given name already exists
+     *
+     * @param templateName Name of the template to check
+     * @return true if the template exists, false otherwise
+     * @throws IOException If there's an issue accessing the template storage
+     */
+    private boolean templateExists(String templateName) throws IOException {
+        List<CommitCraftTemplate> existingTemplates = getAllTemplates();
+        return existingTemplates.stream()
+                .anyMatch(template -> template.getName().equals(templateName));
+    }
+
+    /**
+     * Saves a new template to the dedicated templates file
+     *
+     * @param template The template to save
+     * @throws IOException If there's an issue accessing or writing to the template storage
+     */
+    private void saveTemplate(CommitCraftTemplate template) throws IOException {
+        List<CommitCraftTemplate> existingTemplates = readTemplates();
+        existingTemplates.add(template);
+        saveTemplates(existingTemplates);
+        log.debug("Template saved successfully: {}", template.getName());
     }
 
     public void removeDedicatedTemplate(String dedicatedTemplateName) throws IOException {
